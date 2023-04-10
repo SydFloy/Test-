@@ -1,0 +1,232 @@
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+<MySwiper@MDSwiperItem>
+
+    FitImage:
+        source: "images/pp.png"
+        radius: [20,]
+<DrawerClickableItem@MDNavigationDrawerItem>
+    focus_color: "#e7e4c0"
+    text_color: "#4a4939"
+    icon_color: "#4a4939"
+    ripple_color: "#c5bdd2"
+    selected_color: "#0c6c4d"
+
+
+<DrawerLabelItem@MDNavigationDrawerItem>
+    text_color: "#4a4939"
+    icon_color: "#4a4939"
+    focus_behavior: False
+    selected_color: "#4a4939"
+    _no_ripple_effect: True
+
+<MyScreenManager>:
+    HomeScreen:
+        name: 'home_screen'
+    AboutScreen:
+        name: 'about_screen'
+    FabScreen:
+        name: 'fab_screen'
+    DisScreen:
+        name:'dis_screen'
+    GeaScreen:
+        name:'gea_screen'
+
+<HomeScreen>:##############################################  HOME SCREEN  ############
+    id:home
+    username:user
+    password:passw
+    MDFloatLayout:
+        orientation: 'vertical'
+        radius: [400, 400, 400, 400]
+        md_bg_color: app.theme_cls.primary_color
+        size_hint_x:1.5
+        size_hint_y:0.25
+        
+        pos_hint:{'center_x':.5,'center_y':0.001 }
+        
+    Image:
+        source:"images/LogoO.png"
+        size_hint_x:None  
+        width:500 
+        pos_hint:{'center_x':.5,'center_y':0.8 }
+    
+    
+    MDTextField:
+        id:user
+        hint_text: ""
+        helper_text:"Entre your name"
+        color_mode: 'accent'
+        helper_text_mode: "on_focus"
+        icon_right:"account"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint:{'center_x':.5,'center_y':0.55 }
+        size_hint_x:None  
+        width:350
+    MDTextField:
+        id:passw
+        hint_text: ""
+        helper_text:"Entre your password"
+        color_mode: 'accent'
+        helper_text_mode: "on_focus"
+        icon_right:"key-variant"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint:{'center_x':.5,'center_y':0.4 }
+        size_hint_x:None  
+        width:350 
+        password:True
+       
+    MDRectangleFlatButton:
+        text: 'LOGIN'
+        pos_hint:{'center_x':.5,'center_y':0.25}  
+          
+        on_release:
+            root.log()
+    
+           
+
+<AboutScreen>: #################################### SECOND SCREEN ##############
+    id:ab
+    Image:
+        source:"images/LogoO.png"
+        size_hint_x:None  
+        width:400
+    
+        pos_hint:{'center_x':.5,'center_y':0.5 }
+    MDNavigationLayout:
+
+        MDScreenManager:
+
+            MDScreen:
+
+                MDTopAppBar:
+                    title: ""
+                    elevation: 1
+                    pos_hint: {"top": 1}
+                    right_action_items: [["logout", lambda x: app.log_out(x) ]]
+                    use_overflow: True
+                    opposite_colors: True
+
+                    left_action_items:
+                        [['menu', lambda x: nav_drawer.set_state("open")]]
+
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            scrim_color: 0, 0, 0, .8
+            padding: 0, 56, 12, 16
+            radius: (0, 16, 16, 0)
+           
+            md_bg_color: app.theme_cls.primary_color
+                   
+            MDNavigationDrawerMenu:
+                
+
+                MDNavigationDrawerHeader:
+                   
+                    title: "Machines"
+                    title_color: "#4a4939"
+                    text: "OSD"
+                    
+                    spacing: "4dp"
+                    padding: "12dp", 0, 0, "56dp"
+
+                
+
+                DrawerClickableItem:
+                    icon: "alpha-f-circle-outline"
+                    text_right_color: "#4a4939"
+                    text: "Fabtech"
+                    md_bg_color: app.theme_cls.primary_color
+                    on_release:
+                        app.root.current = 'fab_screen'
+                        root.manager.transition.direction='right'
+
+                DrawerClickableItem:
+                    icon: "alpha-t-circle-outline"
+                    text: "Tailin"
+                    on_release:
+                        app.root.current = 'dis_screen'
+                        root.manager.transition.direction='right'
+                DrawerClickableItem:
+                    icon: "alpha-g-circle-outline"
+                    text: "GEA"
+                    on_release:
+                        app.root.current = 'gea_screen'
+                        root.manager.transition.direction='right'
+                DrawerClickableItem:
+                    icon: "alpha-g-circle-outline"
+                    text: "Glatt"
+                DrawerClickableItem:
+                    icon: "alpha-l-circle-outline"
+                    text: "Last"
+                DrawerClickableItem:
+                    icon: "alpha-h-circle-outline"
+                    text: "Harro"
+
+
+                MDNavigationDrawerDivider:
+
+                
+        
+    
+    MDRectangleFlatButton:
+        text: 'Go to Home'
+        pos_hint:{'center_x':.5,'center_y':0.25}  
+        on_release:
+            app.root.current = 'home_screen'
+            root.manager.transition.direction='right'
+<FabScreen>: ##################### FABTECH SCREEN ###########
+    id:fab
+    MDTopAppBar:
+        title: "Small volume line"
+        halign: "center"
+        elevation: 1
+        pos_hint: {"top": 1}
+        
+        use_overflow: True
+        opposite_colors: True
+
+        
+    Image:
+        source:"images/fab.png"
+        size_hint_x:None  
+        width:200 
+        pos_hint:{'center_x':.5,'center_y':0.7 }
+    MDFloatingActionButtonSpeedDial:
+        id: speed_dial
+        data:fab.data
+        root_button_anim: True
+        hint_animation: False
+        pos_hint: {'right': 5, 'bottom': 5} 
+        halign:'center'
+<DisScreen>:################### DISPENSING SCREEN #####################
+    id:dis
+    MDTopAppBar:
+        title: "Dispensing"
+        halign: "center"
+        elevation: 1
+        pos_hint: {"top": 1}
+        
+        use_overflow: True
+        opposite_colors: True
+    MDBoxLayout:
+        size_hint: .5,.5
+        radius:(500, 500, 500, 500)
+        pos_hint: {'center_x': .5, 'center_y': .5} 
+        md_bg_color: app.theme_cls.primary_color
+<GeaScreen>:###################################################### GEA SCREEN #############################
+    MDTopAppBar:
+        title: "Granulation Line"
+        halign: "center"
+        elevation: 1
+        pos_hint: {"top": 1}
+        
+        use_overflow: True
+        opposite_colors: True
+    Image:
+        source:"images/gea.png"
+        size_hint_x:None  
+        width:200 
+        pos_hint:{'center_x':.5,'center_y':0.7 }
+
+
